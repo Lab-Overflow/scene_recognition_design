@@ -1,0 +1,22 @@
+{
+  "name": "scene-recognition-design",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Hybrid scene recognition demo (rules + VLM fallback)",
+  "scripts": {
+    "config:keys": "python scripts/configure_keys.py",
+    "setup": "python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements-demo.txt",
+    "start": "bash ./scripts/run_live_demo.sh none",
+    "start:openai": "bash ./scripts/run_live_demo.sh openai ${MODEL:-gpt-5.1}",
+    "start:anthropic": "bash ./scripts/run_live_demo.sh anthropic ${MODEL:-claude-opus-4-1}",
+    "start:openai:ui": "bash ./scripts/run_live_with_dashboard.sh openai ${MODEL:-gpt-5.1}",
+    "start:anthropic:ui": "bash ./scripts/run_live_with_dashboard.sh anthropic ${MODEL:-claude-opus-4-1}",
+    "start:url": "bash ./scripts/run_live_demo_url.sh",
+    "dashboard": "bash ./scripts/run_dashboard.sh",
+    "doctor": "python scripts/auto_debug.py --provider none",
+    "doctor:openai": "python scripts/auto_debug.py --provider openai",
+    "doctor:anthropic": "python scripts/auto_debug.py --provider anthropic",
+    "smoke": "python scripts/auto_debug.py --provider none",
+    "test": "python -m unittest discover -s tests -q"
+  }
+}

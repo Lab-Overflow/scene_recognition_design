@@ -1,0 +1,734 @@
+[
+  {
+    "id": "hackathon",
+    "label": "hackathon",
+    "aliases": ["黑客松", "hackathon", "coding_event"],
+    "description": "多人开发现场，存在高密度 laptop/monitor，伴随白板或投影/横幅线索",
+    "max_count_per_object": 5,
+    "evidence": {
+      "positive": {
+        "laptop": 2.2,
+        "monitor": 1.8,
+        "keyboard": 1.2,
+        "person": 0.9,
+        "whiteboard": 2.0,
+        "projector_screen": 2.2,
+        "badge": 1.4,
+        "banner": 1.2,
+        "coffee_cup": 0.4,
+        "backpack": 0.5
+      },
+      "negative": {
+        "bed": -3.0,
+        "oven": -2.0,
+        "sofa": -1.2,
+        "dining_table": -1.0
+      }
+    },
+    "required": {
+      "all_of": [
+        {"object": "person", "op": ">=", "value": 3},
+        {"object": "laptop", "op": ">=", "value": 2},
+        {
+          "any_of": [
+            {"object": "whiteboard", "op": ">=", "value": 1},
+            {"object": "projector_screen", "op": ">=", "value": 1},
+            {"object": "banner", "op": ">=", "value": 1},
+            {"object": "monitor", "op": ">=", "value": 2},
+            {"object": "keyboard", "op": ">=", "value": 3}
+          ]
+        }
+      ]
+    },
+    "boost_conditions": [
+      {
+        "name": "dense_team_work",
+        "bonus": 3.0,
+        "when": {
+          "all_of": [
+            {"object": "person", "op": ">=", "value": 6},
+            {"object": "laptop", "op": ">=", "value": 4}
+          ]
+        }
+      },
+      {
+        "name": "event_context",
+        "bonus": 2.2,
+        "when": {
+          "all_of": [
+            {"object": "badge", "op": ">=", "value": 2},
+            {"object": "banner", "op": ">=", "value": 1}
+          ]
+        }
+      }
+    ],
+    "global_cues": {
+      "indoor_prob": ">=0.45"
+    },
+    "threshold": {
+      "confident": 14.0,
+      "borderline": 8.0
+    }
+  },
+  {
+    "id": "conference_hall",
+    "label": "conference_hall",
+    "aliases": ["会议厅", "conference"],
+    "description": "会议或路演场地",
+    "evidence": {
+      "positive": {
+        "person": 0.8,
+        "chair": 0.9,
+        "projector_screen": 2.0,
+        "microphone": 1.5,
+        "podium": 1.8,
+        "banner": 0.9
+      },
+      "negative": {
+        "bed": -2.0,
+        "stove": -2.0,
+        "toilet": -1.5
+      }
+    },
+    "required": {
+      "all_of": [
+        {"object": "chair", "op": ">=", "value": 8},
+        {
+          "any_of": [
+            {"object": "projector_screen", "op": ">=", "value": 1},
+            {"object": "podium", "op": ">=", "value": 1}
+          ]
+        }
+      ]
+    },
+    "global_cues": {
+      "indoor_prob": ">=0.5"
+    },
+    "threshold": {"confident": 10.0, "borderline": 6.0}
+  },
+  {
+    "id": "classroom",
+    "label": "classroom",
+    "aliases": ["教室"],
+    "description": "教学场景",
+    "evidence": {
+      "positive": {
+        "desk": 1.4,
+        "chair": 1.0,
+        "whiteboard": 2.1,
+        "projector_screen": 1.2,
+        "person": 0.4
+      },
+      "negative": {
+        "wine_glass": -1.2,
+        "bar_counter": -2.0
+      }
+    },
+    "required": {
+      "all_of": [
+        {"object": "desk", "op": ">=", "value": 4},
+        {"object": "whiteboard", "op": ">=", "value": 1}
+      ]
+    },
+    "threshold": {"confident": 9.5, "borderline": 5.5}
+  },
+  {
+    "id": "office_open_space",
+    "label": "office_open_space",
+    "aliases": ["开放办公区"],
+    "description": "标准办公室多人协作",
+    "evidence": {
+      "positive": {
+        "person": 0.8,
+        "laptop": 1.7,
+        "monitor": 1.8,
+        "keyboard": 1.0,
+        "desk": 1.1,
+        "office_chair": 1.1
+      },
+      "negative": {
+        "stove": -2.0,
+        "bed": -2.0,
+        "traffic_light": -1.0
+      }
+    },
+    "required": {
+      "all_of": [
+        {"object": "desk", "op": ">=", "value": 3},
+        {"object": "monitor", "op": ">=", "value": 2}
+      ]
+    },
+    "global_cues": {"indoor_prob": ">=0.5"},
+    "threshold": {"confident": 9.5, "borderline": 5.5}
+  },
+  {
+    "id": "coworking_space",
+    "label": "coworking_space",
+    "aliases": ["共享办公"],
+    "description": "共享办公空间，常见笔记本+咖啡杯",
+    "evidence": {
+      "positive": {
+        "person": 0.7,
+        "laptop": 2.0,
+        "coffee_cup": 1.2,
+        "desk": 1.0,
+        "sofa": 0.8,
+        "whiteboard": 1.0
+      },
+      "negative": {
+        "hospital_bed": -2.0,
+        "stove": -1.5,
+        "microscope": -1.0
+      }
+    },
+    "required": {
+      "all_of": [
+        {"object": "laptop", "op": ">=", "value": 2},
+        {"object": "person", "op": ">=", "value": 2}
+      ]
+    },
+    "threshold": {"confident": 9.0, "borderline": 5.0}
+  },
+  {
+    "id": "stage_performance",
+    "label": "stage_performance",
+    "aliases": ["舞台演出"],
+    "description": "演出中的舞台",
+    "evidence": {
+      "positive": {
+        "stage_lights": 2.2,
+        "microphone": 1.8,
+        "speaker": 1.6,
+        "person": 0.6,
+        "instrument": 1.5,
+        "led_screen": 1.4
+      },
+      "negative": {
+        "dining_table": -1.5,
+        "bed": -2.0
+      }
+    },
+    "required": {
+      "all_of": [
+        {"object": "stage_lights", "op": ">=", "value": 1},
+        {
+          "any_of": [
+            {"object": "microphone", "op": ">=", "value": 1},
+            {"object": "instrument", "op": ">=", "value": 1}
+          ]
+        }
+      ]
+    },
+    "threshold": {"confident": 10.0, "borderline": 6.0}
+  },
+  {
+    "id": "empty_stage",
+    "label": "empty_stage",
+    "aliases": ["空舞台"],
+    "description": "未开始演出的舞台",
+    "evidence": {
+      "positive": {
+        "stage_lights": 2.2,
+        "speaker": 1.4,
+        "podium": 1.1,
+        "curtain": 1.2
+      },
+      "negative": {
+        "dining_table": -1.5,
+        "bed": -2.0,
+        "person": -0.1
+      }
+    },
+    "required": {
+      "all_of": [
+        {"object": "stage_lights", "op": ">=", "value": 1}
+      ]
+    },
+    "threshold": {"confident": 8.0, "borderline": 4.5}
+  },
+  {
+    "id": "public_plaza",
+    "label": "public_plaza",
+    "aliases": ["广场"],
+    "description": "开阔公共广场",
+    "evidence": {
+      "positive": {
+        "person": 0.8,
+        "fountain": 1.7,
+        "bench": 1.2,
+        "tree": 1.0,
+        "flag": 0.8
+      },
+      "negative": {
+        "bed": -2.5,
+        "stove": -2.0,
+        "computer_tower": -1.0
+      }
+    },
+    "required": {
+      "all_of": [
+        {"object": "person", "op": ">=", "value": 4},
+        {"global": "outdoor_prob", "op": ">=", "value": 0.5}
+      ]
+    },
+    "threshold": {"confident": 8.5, "borderline": 4.8}
+  },
+  {
+    "id": "restaurant_interior",
+    "label": "restaurant_interior",
+    "aliases": ["餐厅"],
+    "description": "室内餐厅",
+    "evidence": {
+      "positive": {
+        "dining_table": 2.0,
+        "chair": 0.7,
+        "plate": 1.2,
+        "fork": 1.0,
+        "knife": 1.0,
+        "wine_glass": 1.4,
+        "person": 0.4
+      },
+      "negative": {
+        "bed": -2.0,
+        "stove": -1.0,
+        "keyboard": -0.5
+      }
+    },
+    "required": {
+      "all_of": [
+        {
+          "any_of": [
+            {"object": "dining_table", "op": ">=", "value": 2},
+            {
+              "all_of": [
+                {"object": "plate", "op": ">=", "value": 2},
+                {"object": "fork", "op": ">=", "value": 2}
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "threshold": {"confident": 9.0, "borderline": 5.0}
+  },
+  {
+    "id": "bar_interior",
+    "label": "bar_interior",
+    "aliases": ["酒吧"],
+    "description": "吧台场景",
+    "evidence": {
+      "positive": {
+        "bar_counter": 2.2,
+        "wine_glass": 1.6,
+        "bottle": 1.3,
+        "stool": 1.0,
+        "person": 0.4
+      },
+      "negative": {
+        "whiteboard": -1.0,
+        "hospital_bed": -2.0
+      }
+    },
+    "required": {
+      "all_of": [
+        {"object": "bar_counter", "op": ">=", "value": 1},
+        {"object": "bottle", "op": ">=", "value": 2}
+      ]
+    },
+    "threshold": {"confident": 8.5, "borderline": 4.5}
+  },
+  {
+    "id": "cafe",
+    "label": "cafe",
+    "aliases": ["咖啡馆"],
+    "description": "咖啡店桌面与杯具",
+    "evidence": {
+      "positive": {
+        "coffee_cup": 2.0,
+        "laptop": 1.1,
+        "person": 0.4,
+        "table": 1.0,
+        "cake": 1.2
+      },
+      "negative": {
+        "hospital_bed": -2.0,
+        "microscope": -1.2
+      }
+    },
+    "required": {
+      "all_of": [
+        {"object": "coffee_cup", "op": ">=", "value": 2}
+      ]
+    },
+    "threshold": {"confident": 8.0, "borderline": 4.2}
+  },
+  {
+    "id": "retail_store",
+    "label": "retail_store",
+    "aliases": ["零售店"],
+    "description": "普通零售货架",
+    "evidence": {
+      "positive": {
+        "shelf": 1.8,
+        "price_tag": 1.5,
+        "shopping_basket": 1.3,
+        "person": 0.3,
+        "checkout_counter": 1.5
+      },
+      "negative": {
+        "bed": -2.0,
+        "whiteboard": -1.0
+      }
+    },
+    "required": {
+      "all_of": [
+        {"object": "shelf", "op": ">=", "value": 2}
+      ]
+    },
+    "threshold": {"confident": 8.3, "borderline": 4.5}
+  },
+  {
+    "id": "supermarket",
+    "label": "supermarket",
+    "aliases": ["超市"],
+    "description": "大型卖场",
+    "evidence": {
+      "positive": {
+        "shopping_cart": 2.0,
+        "shelf": 1.4,
+        "checkout_counter": 1.8,
+        "person": 0.4,
+        "fruit": 1.0,
+        "vegetable": 1.0
+      },
+      "negative": {
+        "microphone": -1.0,
+        "bed": -2.0
+      }
+    },
+    "required": {
+      "all_of": [
+        {
+          "any_of": [
+            {"object": "shopping_cart", "op": ">=", "value": 1},
+            {"object": "checkout_counter", "op": ">=", "value": 1}
+          ]
+        },
+        {"object": "shelf", "op": ">=", "value": 3}
+      ]
+    },
+    "threshold": {"confident": 9.2, "borderline": 5.2}
+  },
+  {
+    "id": "street_day",
+    "label": "street_day",
+    "aliases": ["白天街道"],
+    "description": "白天城市街道",
+    "evidence": {
+      "positive": {
+        "car": 1.2,
+        "bus": 1.2,
+        "traffic_light": 1.8,
+        "building": 1.0,
+        "person": 0.3
+      },
+      "negative": {
+        "bed": -2.0,
+        "dining_table": -1.5,
+        "projector_screen": -1.0
+      }
+    },
+    "required": {
+      "all_of": [
+        {"global": "outdoor_prob", "op": ">=", "value": 0.6},
+        {
+          "any_of": [
+            {"object": "car", "op": ">=", "value": 2},
+            {"object": "traffic_light", "op": ">=", "value": 1}
+          ]
+        }
+      ]
+    },
+    "threshold": {"confident": 8.0, "borderline": 4.5}
+  },
+  {
+    "id": "street_night",
+    "label": "street_night",
+    "aliases": ["夜间街道"],
+    "description": "夜景道路",
+    "evidence": {
+      "positive": {
+        "car": 1.1,
+        "traffic_light": 1.5,
+        "street_lamp": 1.8,
+        "neon_sign": 1.4,
+        "person": 0.2
+      },
+      "negative": {
+        "bed": -2.0,
+        "stove": -1.5
+      }
+    },
+    "required": {
+      "all_of": [
+        {"global": "outdoor_prob", "op": ">=", "value": 0.6},
+        {"global": "brightness", "op": "<=", "value": 0.35}
+      ]
+    },
+    "threshold": {"confident": 8.0, "borderline": 4.5}
+  },
+  {
+    "id": "parking_lot",
+    "label": "parking_lot",
+    "aliases": ["停车场"],
+    "description": "停车场",
+    "evidence": {
+      "positive": {
+        "car": 1.7,
+        "parking_sign": 1.8,
+        "person": 0.2,
+        "building": 0.6
+      },
+      "negative": {
+        "bed": -2.0,
+        "projector_screen": -1.0
+      }
+    },
+    "required": {
+      "all_of": [
+        {"object": "car", "op": ">=", "value": 4}
+      ]
+    },
+    "threshold": {"confident": 7.8, "borderline": 4.2}
+  },
+  {
+    "id": "train_station",
+    "label": "train_station",
+    "aliases": ["火车站"],
+    "description": "站台候车",
+    "evidence": {
+      "positive": {
+        "train": 2.2,
+        "platform": 1.6,
+        "person": 0.6,
+        "luggage": 1.1,
+        "signboard": 1.0
+      },
+      "negative": {
+        "bed": -2.0,
+        "stove": -1.5
+      }
+    },
+    "required": {
+      "all_of": [
+        {"object": "train", "op": ">=", "value": 1}
+      ]
+    },
+    "threshold": {"confident": 8.7, "borderline": 5.0}
+  },
+  {
+    "id": "airport_terminal",
+    "label": "airport_terminal",
+    "aliases": ["机场航站楼"],
+    "description": "机场出发到达区域",
+    "evidence": {
+      "positive": {
+        "luggage": 1.6,
+        "flight_board": 2.2,
+        "person": 0.7,
+        "queue_barrier": 1.2,
+        "gate_sign": 1.4
+      },
+      "negative": {
+        "bed": -2.0,
+        "stove": -1.8
+      }
+    },
+    "required": {
+      "all_of": [
+        {
+          "any_of": [
+            {"object": "flight_board", "op": ">=", "value": 1},
+            {"object": "gate_sign", "op": ">=", "value": 1}
+          ]
+        },
+        {"object": "luggage", "op": ">=", "value": 2}
+      ]
+    },
+    "threshold": {"confident": 9.5, "borderline": 5.5}
+  },
+  {
+    "id": "gym",
+    "label": "gym",
+    "aliases": ["健身房"],
+    "description": "健身训练场景",
+    "evidence": {
+      "positive": {
+        "dumbbell": 2.1,
+        "treadmill": 1.9,
+        "person": 0.6,
+        "bench_press": 1.8,
+        "mirror": 1.0
+      },
+      "negative": {
+        "dining_table": -1.5,
+        "bed": -2.0
+      }
+    },
+    "required": {
+      "all_of": [
+        {
+          "any_of": [
+            {"object": "dumbbell", "op": ">=", "value": 2},
+            {"object": "treadmill", "op": ">=", "value": 1}
+          ]
+        }
+      ]
+    },
+    "threshold": {"confident": 8.5, "borderline": 4.8}
+  },
+  {
+    "id": "home_kitchen",
+    "label": "home_kitchen",
+    "aliases": ["厨房"],
+    "description": "家用厨房",
+    "evidence": {
+      "positive": {
+        "stove": 2.0,
+        "oven": 1.8,
+        "sink": 1.2,
+        "refrigerator": 1.5,
+        "pan": 1.0
+      },
+      "negative": {
+        "stage_lights": -1.8,
+        "projector_screen": -1.4
+      }
+    },
+    "required": {
+      "all_of": [
+        {
+          "any_of": [
+            {"object": "stove", "op": ">=", "value": 1},
+            {"object": "oven", "op": ">=", "value": 1}
+          ]
+        }
+      ]
+    },
+    "threshold": {"confident": 8.4, "borderline": 4.8}
+  },
+  {
+    "id": "bedroom",
+    "label": "bedroom",
+    "aliases": ["卧室"],
+    "description": "床与床头区域",
+    "evidence": {
+      "positive": {
+        "bed": 2.4,
+        "pillow": 1.4,
+        "blanket": 1.2,
+        "nightstand": 1.1,
+        "lamp": 0.8
+      },
+      "negative": {
+        "stove": -2.0,
+        "traffic_light": -1.5,
+        "projector_screen": -1.0
+      }
+    },
+    "required": {
+      "all_of": [
+        {"object": "bed", "op": ">=", "value": 1}
+      ]
+    },
+    "threshold": {"confident": 7.8, "borderline": 4.0}
+  },
+  {
+    "id": "hospital_ward",
+    "label": "hospital_ward",
+    "aliases": ["医院病房"],
+    "description": "医院护理环境",
+    "evidence": {
+      "positive": {
+        "hospital_bed": 2.4,
+        "iv_stand": 2.0,
+        "medical_monitor": 1.8,
+        "nurse": 1.0,
+        "patient": 1.0
+      },
+      "negative": {
+        "wine_glass": -1.5,
+        "stage_lights": -2.0
+      }
+    },
+    "required": {
+      "all_of": [
+        {"object": "hospital_bed", "op": ">=", "value": 1},
+        {
+          "any_of": [
+            {"object": "iv_stand", "op": ">=", "value": 1},
+            {"object": "medical_monitor", "op": ">=", "value": 1}
+          ]
+        }
+      ]
+    },
+    "threshold": {"confident": 9.2, "borderline": 5.2}
+  },
+  {
+    "id": "laboratory",
+    "label": "laboratory",
+    "aliases": ["实验室"],
+    "description": "科研实验室",
+    "evidence": {
+      "positive": {
+        "microscope": 2.2,
+        "lab_coat": 1.5,
+        "test_tube": 1.8,
+        "beaker": 1.5,
+        "person": 0.4
+      },
+      "negative": {
+        "bed": -1.8,
+        "traffic_light": -1.2,
+        "bar_counter": -1.5
+      }
+    },
+    "required": {
+      "all_of": [
+        {
+          "any_of": [
+            {"object": "microscope", "op": ">=", "value": 1},
+            {"object": "test_tube", "op": ">=", "value": 2}
+          ]
+        }
+      ]
+    },
+    "threshold": {"confident": 9.0, "borderline": 5.0}
+  },
+  {
+    "id": "server_room",
+    "label": "server_room",
+    "aliases": ["机房"],
+    "description": "服务器机柜空间",
+    "evidence": {
+      "positive": {
+        "server_rack": 2.5,
+        "network_switch": 2.0,
+        "cable_bundle": 1.3,
+        "ups": 1.0,
+        "person": 0.2
+      },
+      "negative": {
+        "bed": -2.0,
+        "stove": -1.8,
+        "wine_glass": -1.0
+      }
+    },
+    "required": {
+      "all_of": [
+        {"object": "server_rack", "op": ">=", "value": 2}
+      ]
+    },
+    "threshold": {"confident": 9.0, "borderline": 5.0}
+  }
+]
