@@ -11,7 +11,7 @@
 ### 0.1 首次安装
 
 ```bash
-cd /Users/russellfool/Downloads/scene_recognition_design
+cd /Users/user_name/Downloads/scene_recognition_design
 python3 -m venv .venv
 . .venv/bin/activate
 pip install -r requirements-demo.txt
